@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { destinations, type Destination } from "@/lib/destinations";
 import {
   getWeatherForLocation,
@@ -683,6 +684,16 @@ export default function Home() {
               )}
             </div>
           </ScrollArea>
+
+          {/* Footer with Privacy Link */}
+          <div className="shrink-0 px-4 py-2 border-t border-zinc-100 bg-zinc-50/50">
+            <Link
+              href="/privacy"
+              className="text-[10px] md:text-xs text-zinc-400 hover:text-zinc-600 transition-colors"
+            >
+              Privacy Policy
+            </Link>
+          </div>
         </aside>
 
         {/* Map - hidden on mobile when list view is active */}
