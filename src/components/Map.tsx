@@ -21,6 +21,7 @@ interface MapProps {
   onSelectDestination: (id: string) => void;
   filterLabel: string;
   weatherCondition?: string;
+  isVisible?: boolean;
 }
 
 export default function MapView({
@@ -30,12 +31,36 @@ export default function MapView({
   onSelectDestination,
   filterLabel,
   weatherCondition,
+  isVisible = true,
 }: MapProps) {
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<globalThis.Map<string, L.CircleMarker>>(new globalThis.Map());
   const userMarkerRef = useRef<L.CircleMarker | null>(null);
   const [isMapReady, setIsMapReady] = useState(false);
+
+  // Invalidate map size when visibility changes (fixes mobile view toggle)
+  useEffect(() => {
+    if (isVisible && mapRef.current && isMapReady) {
+      // Small delay to ensure the container is fully rendered
+      const timer = setTimeout(() => {
+        mapRef.current?.invalidateSize();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, isMapReady]);
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (mapRef.current && isMapReady) {
+        mapRef.current.invalidateSize();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isMapReady]);
 
   // Initialize map
   useEffect(() => {

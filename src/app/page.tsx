@@ -718,6 +718,7 @@ export default function Home() {
             onSelectDestination={handleSelectDestination}
             filterLabel={currentFilter.label}
             weatherCondition={weatherCondition}
+            isVisible={mobileView === "map"}
           />
 
           {/* Map legend - smaller on mobile */}
