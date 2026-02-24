@@ -354,8 +354,8 @@ export default function Home() {
                 >
                   WARM ROAD
                 </h1>
-                <p className="text-[10px] md:text-xs text-zinc-500 hidden sm:block">
-                  Find the weather you want within an 8 hour drive
+                <p className="text-[10px] md:text-xs text-zinc-500">
+                  Find your ideal weather within driving distance
                 </p>
               </div>
             </div>
